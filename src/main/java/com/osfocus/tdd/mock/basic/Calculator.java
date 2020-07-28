@@ -1,4 +1,4 @@
-package com.osfocus.tdd.mock;
+package com.osfocus.tdd.mock.basic;
 
 public class Calculator {
     private final Processor1 process1;

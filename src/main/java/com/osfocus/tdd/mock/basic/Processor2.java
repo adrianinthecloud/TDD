@@ -1,4 +1,4 @@
-package com.osfocus.tdd.mock;
+package com.osfocus.tdd.mock.basic;
 
 public class Processor2 {
     public long process(long n) {

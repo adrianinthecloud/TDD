@@ -1,12 +1,13 @@
-package com.osfocus.tdd.mock;
+package com.osfocus.tdd.mock.basic;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentMatchers;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 
 public class CalculatorTester {
     @Mock

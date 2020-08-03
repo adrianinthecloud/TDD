@@ -9,6 +9,7 @@ import org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfi
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.mock.web.MockHttpSession;
 import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
@@ -17,9 +18,11 @@ import org.springframework.web.context.WebApplicationContext;
 
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestBuilders.formLogin;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurers.*;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
+@WebAppConfiguration
 public class WebControllerTest {
     @Autowired
     private WebApplicationContext wac;
@@ -29,7 +32,7 @@ public class WebControllerTest {
 
     @Before
     public void setupMockMvc() {
-        this.mvc = MockMvcBuilders.webAppContextSetup(wac).build();
+        this.mvc = MockMvcBuilders.webAppContextSetup(wac).apply(springSecurity()).build();
         session = new MockHttpSession();
     }
 
@@ -49,6 +52,6 @@ public class WebControllerTest {
 
     @Test
     public void memberPageTest() throws Exception {
-        this.mvc.perform(formLogin("/login").user("admin").password("test123")).andExpect(status().isOk());
+        this.mvc.perform(formLogin("/login").user("admin").password("test123")).andExpect(status().is(302));
     }
 }

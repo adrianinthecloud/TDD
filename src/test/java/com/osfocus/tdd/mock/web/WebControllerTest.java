@@ -15,6 +15,9 @@ import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 
+import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestBuilders.formLogin;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+
 @RunWith(SpringRunner.class)
 @SpringBootTest
 public class WebControllerTest {
@@ -33,14 +36,19 @@ public class WebControllerTest {
     @Test
     public void indexPageCanVisit() throws Exception {
         this.mvc.perform(MockMvcRequestBuilders.get("/").session(session))
-                .andExpect(MockMvcResultMatchers.status().isOk())
+                .andExpect(status().isOk())
                 .andExpect(MockMvcResultMatchers.content().contentType("text/plain;charset=UTF-8"));
     }
 
     @Test
     public void versionTest() throws Exception {
         this.mvc.perform(MockMvcRequestBuilders.get("/version"))
-                .andExpect(MockMvcResultMatchers.status().isOk())
+                .andExpect(status().isOk())
                 .andExpect(MockMvcResultMatchers.content().string("com.osfocus.v1"));
+    }
+
+    @Test
+    public void memberPageTest() throws Exception {
+        this.mvc.perform(formLogin("/login").user("admin").password("test123")).andExpect(status().isOk());
     }
 }
